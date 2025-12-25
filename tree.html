@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的圣诞树网站</title>
+    <style>
+        /* 页面基础样式 */
+        body {
+            background-color: #050b14; /* 深蓝色背景 */
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden; /* 隐藏滚动条 */
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+
+        h1 {
+            color: #fff;
+            text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+            margin-bottom: 40px;
+            z-index: 10;
+        }
+
+        /* 圣诞树整体容器 */
+        .tree {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* 顶部的星星 */
+        .star {
+            width: 50px;
+            height: 50px;
+            background: #ffd700;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            z-index: 10;
+            box-shadow: 0 0 20px #ffd700;
+            animation: star-glow 2s infinite;
+        }
+
+        /* 树层级通用样式 */
+        .layer {
+            width: 0;
+            height: 0;
+            border-left: solid transparent;
+            border-right: solid transparent;
+            border-bottom: solid #2d5a27;
+            position: relative;
+            z-index: 5;
+        }
+
+        .top { border-left-width: 60px; border-right-width: 60px; border-bottom-width: 80px; margin-top: -20px; }
+        .mid { border-left-width: 90px; border-right-width: 90px; border-bottom-width: 110px; margin-top: -50px; }
+        .bot { border-left-width: 120px; border-right-width: 120px; border-bottom-width: 140px; margin-top: -60px; }
+
+        /* 树干 */
+        .trunk {
+            width: 40px;
+            height: 50px;
+            background: #4b3621;
+            border-radius: 0 0 5px 5px;
+        }
+
+        /* 闪烁的装饰球 */
+        .bauble {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            animation: twinkle 1.5s infinite ease-in-out;
+        }
+
+        /* 不同位置的装饰球 */
+        .b1 { background: #ff4d4d; top: 40px; left: -10px; animation-delay: 0.1s; }
+        .b2 { background: #ffeb3b; top: 70px; left: -40px; animation-delay: 0.3s; }
+        .b3 { background: #2196f3; top: 70px; right: -40px; animation-delay: 0.5s; }
+        .b4 { background: #e91e63; top: 90px; left: -80px; animation-delay: 0.2s; }
+        .b5 { background: #00bcd4; top: 100px; left: 0px; animation-delay: 0.7s; }
+        .b6 { background: #ff9800; top: 90px; right: -80px; animation-delay: 0.4s; }
+
+        /* 动画效果 */
+        @keyframes star-glow {
+            0%, 100% { transform: scale(1); filter: brightness(1); }
+            50% { transform: scale(1.1); filter: brightness(1.3); }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        /* 雪花 */
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            color: white;
+            user-select: none;
+            z-index: 1;
+            pointer-events: none;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(110vh); }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Merry Christmas 2025 🎄</h1>
+
+    <div class="tree">
+        <div class="star"></div>
+        <div class="layer top">
+            <div class="bauble b1"></div>
+        </div>
+        <div class="layer mid">
+            <div class="bauble b2"></div>
+            <div class="bauble b3"></div>
+        </div>
+        <div class="layer bot">
+            <div class="bauble b4"></div>
+            <div class="bauble b5"></div>
+            <div class="bauble b6"></div>
+        </div>
+        <div class="trunk"></div>
+    </div>
+
+    <script>
+        function createSnowflake() {
+            const snow = document.createElement('div');
+            snow.classList.add('snowflake');
+            snow.innerHTML = '❄';
+            snow.style.left = Math.random() * 100 + 'vw';
+            snow.style.fontSize = Math.random() * 10 + 10 + 'px';
+            snow.style.opacity = Math.random();
+            
+            const duration = Math.random() * 3 + 4; // 雪花飘落时间
+            snow.style.animationDuration = duration + 's';
+
+            document.body.appendChild(snow);
+
+            setTimeout(() => {
+                snow.remove();
+            }, duration * 1000);
+        }
+
+        setInterval(createSnowflake, 150);
+    </script>
+</body>
+</html>
